@@ -28,12 +28,16 @@ if(!isset($_SESSION["userID"])){
         </nav>
     </aside>
     <div id="container">
-        <section id="familyEvents">
-            <a href="createevent.php">Create an event</a>
-        </section>
-        <section id="familyMembers">
-            <a href="addmember.php">Add a member</a>
-        </section>
+        <h3>Family Name</h3>
+        <div id="sectionContainer">
+            <section id="familyEvents">
+                <a href="createevent.php">Create an event</a>
+            </section>
+            <section id="familyMembers">
+                <a href="addmember.php">Add a member</a>
+            </section>
+        </div>
+
     </div>
 </main>
 <?php include_once 'footer.php';?>

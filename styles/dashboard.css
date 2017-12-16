@@ -1,0 +1,13 @@
+main{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#calNode{
+    background-color: #DDDDDD;
+    border: 1px solid black;
+    float: left;
+    width: 100px;
+    height: 100px;
+}
