@@ -1,7 +1,7 @@
 <?php
 session_start();
-
-require '../model/User.php';
+require "../model/Database.php";
+require "../model/User.php";
 
 if(isset($_SESSION["userID"])){
     $user = User::getUser();
@@ -34,7 +34,7 @@ else{
             <div class="form-group">
                 <label class="col-md-4 control label">Profile Picture</label>
                 <div class="col-md-4 inputGroupContainer">
-                    <img src="" alt="Profile Picture" height="250" width="250">
+                    <img src="<?php echo $user->getProfilePicUrl();?>" alt="Profile Picture" height="250" width="250">
                 </div>
 
             </div>

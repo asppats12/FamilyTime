@@ -1,15 +1,14 @@
 <?php
 session_start();
-
 if(!isset($_SESSION["userID"])){
-    header("Location: login.php");
+    header("Location:login.php");
+    exit();
 }
-
 ?>
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Family Time</title>
+    <title>Family</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,8 +21,19 @@ if(!isset($_SESSION["userID"])){
 <body>
 <?php include_once 'header.php';?>
 <main>
-    <div id="calContainer">
-
+    <aside id="sideNav">
+        <nav>
+            <a href="#" id="events">Events</a>
+            <a href="#" id="members">Members</a>
+        </nav>
+    </aside>
+    <div id="container">
+        <section id="familyEvents">
+            <a href="createevent.php">Create an event</a>
+        </section>
+        <section id="familyMembers">
+            <a href="addmember.php">Add a member</a>
+        </section>
     </div>
 </main>
 <?php include_once 'footer.php';?>

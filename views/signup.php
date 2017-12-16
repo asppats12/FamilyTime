@@ -1,5 +1,26 @@
 <?php
-    require '../model/Database.php';
+session_start();
+require "../model/Database.php";
+require "../model/User.php";
+
+
+if(isset($_POST['submit'])) {
+    $user = User::getUser();
+    if($user->insertPhoto()){
+        $user->setFirstName($_POST["fname"]);
+        $user->setLastName($_POST['lname']);
+        $user->setDateOfBirth($_POST['date']);
+        $user->setEmail($_POST['email']);
+        $user->setPassword($_POST["password"]);
+        if($user->insertUser()){
+            $_SESSION["userCreated"] = "Registration Successful";
+            header("Location:login.php");
+        }
+    }
+}
+
+?>
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -60,21 +81,23 @@
                 <div class="accountFormToggle display-none" id="passwordForm">
                     <div class="col-md-5">
                         <label for="password">Password</label>
-                        <input type="password" id="password" placeholder="Password" name="pass" class="form-control"  value='' data-bv-excluded="false" required>
+                        <input type="password" id="password" placeholder="Password" name="password" class="form-control"  value='' data-bv-excluded="false" required>
                     </div>
 
                     <div class="col-md-5 col-md-offset-1">
                         <label for="exampleInputEmail1">Confirm password</label>
-                        <input type='password' id="password2" placeholder="Confirm password" name="pass" class="form-control" value='' data-bv-excluded="false" data-match="#password" required>
+                        <input type='password' id="password2" placeholder="Confirm password" name="password" class="form-control" value='' data-bv-excluded="false" data-match="#password" required>
                     </div>
                 </div>
             </div>
 
-            <div class="row">Profile Pic
-                <div class="col-sm-4 text-center">
+            <div class="row">
+
+                <div class="col-sm-4">
                     <div class="kv-avatar">
                         <div class="file-loading">
-                            <input id="avatar-1" name="avatar-1" type="file">
+                            <label for="fileUpload">Profile Pic</label>
+                            <input id="avatar-1" name="fileUpload" type="file">
                         </div>
                     </div>
                     <div class="kv-avatar-hint"><small>Select file < 1500 KB</small></div>
@@ -88,45 +111,11 @@
                 </div>
             </div>
 
-
         </fieldset>
     </form>
 </div>
 
 </body>
-<?php
-var_dump($_POST);
-if(isset($_POST['submit'])) {
-    $fname = $_POST['fname'];
-    $lname = $_POST['lname'];
-    $date = $_POST['date'];
-    $email = $_POST['email'];
-    $password = $_POST['pass'];
-
-    try {
-
-        $conn = Database::getConnection();
-        $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-        $sql="INSERT INTO users(email,password,firstname,lastname,dateofbirth) VALUES(:email,:password,:fname,:lname,:date)";
-
-        $pdostm = $conn->prepare($sql);
-        $pdostm->bindValue(':fname',$fname,PDO::PARAM_STR);
-        $pdostm->bindValue(':lname',$lname,PDO::PARAM_STR);
-        $pdostm->bindValue(':date',$date,PDO::PARAM_STR);
-        $pdostm->bindValue(':email',$email,PDO::PARAM_STR);
-        $pdostm->bindValue(':password',$password,PDO::PARAM_STR);
-        $rowsUpdated = $pdostm->execute();
-
-        if ($rowsUpdated > 0) {
-            header( "Location:../index.php" );
-            exit();
-        }
-    }
-    catch (PDOException $e) {
-        echo $e->getMessage();
-    }
-}
-?>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

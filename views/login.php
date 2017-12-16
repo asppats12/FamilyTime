@@ -17,11 +17,11 @@ else{
         $password = $_POST["password"];
         if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
             $valid=false;
-            $errors = $errors. "<p style='color:red'>Please enter a valid email.</p>";
+            $error = $error. "Please enter a valid email.";
         }
         else if(strlen($password)<4){
             $valid=false;
-            $errors = $errors. "<p style='color:red'>Password must be atleast 4 characters.</p>";
+            $error = $error. "Password must be atleast 4 characters.";
         }
         else{
             $user = User::getUser();
@@ -62,7 +62,10 @@ else{
 
         <form id="loginForm" action="" method="post">
             <div class="form-group">
-                <?php if(isset($_SESSION["loginError"])){ echo $_SESSION["loginError"];} ?>
+                <?php if(isset($_SESSION["userCreated"])){ echo $_SESSION["userCreated"];}?>
+            </div>
+            <div class="form-group">
+                <p style="color:red;"><?php if(isset($error)){ echo $error;} ?></p>
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
@@ -84,6 +87,7 @@ else{
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
-<?php $_SESSION["loginError"] = ""?>
+<?php $_SESSION["loginError"] = "";
+$_SESSION["userCreated"] = "";?>
 </body>
 </html>

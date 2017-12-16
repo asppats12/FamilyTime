@@ -157,9 +157,6 @@ class User
                 $this->id = $stmt->fetch(PDO::FETCH_OBJ)->id;
                 return true;
             }
-            else{
-                return false;
-            }
         }
         catch(PDOException $ex){
             echo $ex->getMessage();
@@ -171,8 +168,8 @@ class User
         try{
             $conn = Database::getConnection();
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $find = "select * from users where id=:id";
-            $stmt = $conn->prepare($find);
+            $fetch = "select * from users where id=:id";
+            $stmt = $conn->prepare($fetch);
             $stmt->bindValue(":id",$id, PDO::PARAM_INT);
             $stmt->execute();
             if($stmt->rowCount()>0){
@@ -182,6 +179,7 @@ class User
                 $this->lastName = $tempUser->lastname;
                 $this->email = $tempUser->email;
                 $this->dateOfBirth = $tempUser->dateofbirth;
+                $this->profilePicUrl = $tempUser->profilepicurl;
                 return true;
             }
         }
@@ -192,10 +190,74 @@ class User
     }
 
     public function insertUser(){
+        try {
 
+            $conn = Database::getConnection();
+            $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+            $update="INSERT INTO users(email,password,firstname,lastname,dateofbirth,profilepicurl) VALUES(:email,:password,:fname,:lname,:date,:profilepicurl)";
+
+            $stmt = $conn->prepare($update);
+            $stmt->bindValue(':fname',$this->firstName,PDO::PARAM_STR);
+            $stmt->bindValue(':lname',$this->lastName,PDO::PARAM_STR);
+            $stmt->bindValue(':date',$this->dateOfBirth,PDO::PARAM_STR);
+            $stmt->bindValue(':email',$this->email,PDO::PARAM_STR);
+            $stmt->bindValue(':password',$this->password,PDO::PARAM_STR);
+            $stmt->bindValue(':profilepicurl',$this->profilePicUrl,PDO::PARAM_STR);
+            $rowsUpdated = $stmt->execute();
+
+            if ($rowsUpdated > 0) {
+                return true;
+            }
+        }
+        catch (PDOException $e) {
+            echo $e->getMessage();
+            exit();
+        }
     }
 
     public function updateUser(){
 
+    }
+
+    public function insertPhoto(){
+        $target_dir = "../uploads/photos/";
+        $target_file = $target_dir . basename($_FILES["fileUpload"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+        // Check if image file is a actual image or fake image
+
+        $check = getimagesize($_FILES["fileUpload"]["tmp_name"]);
+        if($check !== false) {
+            echo "File is an image - " . $check["mime"] . ".";
+            $uploadOk = 1;
+        } else {
+            echo "File is not an image.";
+            $uploadOk = 0;
+        }
+
+
+        // Check file size
+        if ($_FILES["fileUpload"]["size"] > 1500000) {
+            echo "Sorry, your file is too large.";
+            $uploadOk = 0;
+        }
+        // Allow certain file formats
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+            && $imageFileType != "gif" ) {
+            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+        }
+        // Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0) {
+            echo "Sorry, your file was not uploaded.";
+        // if everything is ok, try to upload file
+        } else {
+            if (move_uploaded_file($_FILES["fileUpload"]["tmp_name"], $target_file)) {
+                $this->setProfilePicUrl($target_file);
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 }
