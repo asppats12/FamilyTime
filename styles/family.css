@@ -1,0 +1,48 @@
+#tabs{
+    width: 100%;
+}
+#tabs a{
+    text-decoration: none;
+    box-sizing: border-box;
+    float:left;
+    background-color: #212529;
+    width: 50%;
+    text-align: center;
+    padding: 10px;
+}
+#tabs a:hover{
+    background-color: #313131;
+}
+#container{
+    width:80%;
+    margin: auto;
+    box-sizing: border-box;
+    min-height: 100vh;
+    background-color: #CCCCCC;
+    padding: 10px;
+}
+#sectionContainer{
+    width: 100%;
+}
+#familyEvents, #familyMembers{
+    width: inherit;
+}
+#sectionContainer a{
+    text-decoration: none;
+    box-sizing: border-box;
+    width:150px;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+    background-color: lightseagreen;
+    float: right;
+}
+
+#sectionContainer a:hover{
+    background-color: teal;
+}
+
+.listContainers{
+    width: 100%;
+}
