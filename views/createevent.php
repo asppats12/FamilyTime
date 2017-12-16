@@ -22,9 +22,7 @@
 <body>
 <?php include_once 'header.php';?>
 <main>
-    <div id="calContainer">
-        <h3>Calendar Placeholder</h3>
-    </div>
+
 </main>
 <?php include_once 'footer.php';?>
 <script type="text/javascript" src="../scripts/js/dashboard.js"></script>

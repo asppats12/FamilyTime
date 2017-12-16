@@ -12,14 +12,11 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/dashboard.css" type="text/css">
-    <script src="../scripts/js/dashboard.js"></script>
 </head>
 <body>
 <?php include_once 'header.php';?>
 <main>
-    <div id="calContainer">
-        <h3>Calendar Placeholder</h3>
-    </div>
+
 </main>
 <?php include_once 'footer.php';?>
 <script type="text/javascript" src="../scripts/js/dashboard.js"></script>
