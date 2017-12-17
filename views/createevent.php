@@ -16,13 +16,70 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link rel="stylesheet" href="../styles/dashboard.css" type="text/css">
-    <script src="../scripts/js/dashboard.js"></script>
+    <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body>
 <?php include_once 'header.php';?>
-<main>
+<main id="container">
+    <h3>Create an Event</h3>
+    <form id="eventForm" method="post" action="">
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="eventname">Event Name</label>
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <input  id="eventname" name="eventname" placeholder="Event Name" class="form-control"  type="text">
+                </div>
+            </div>
+        </div>
 
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="startdate">Start Date</label>
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <input  id="startdate" name="startdate" class="form-control"  type="date">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="enddate">End Date</label>
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <input  id="enddate" name="enddate" class="form-control"  type="date">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="starttime">Start Time</label>
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <input  id="starttime" name="starttime" class="form-control"  type="time">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="endtime">End Time</label>
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <input  id="endtime" name="endtime" class="form-control"  type="time">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="eventdetails">Details</label>
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <textarea  id="eventdetails" name="eventdetails" class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div id="mapContainer">
+
+    </div>
 </main>
 <?php include_once 'footer.php';?>
 <script type="text/javascript" src="../scripts/js/dashboard.js"></script>
