@@ -35,6 +35,8 @@ else{
                 <label class="col-md-4 control label">Profile Picture</label>
                 <div class="col-md-4 inputGroupContainer">
                     <img src="<?php echo $user->getProfilePicUrl();?>" alt="Profile Picture" height="250" width="250">
+                    <!--<input id="profilePicUpload" name="fileUpload" type="file">
+                    <button id="btnProfile">Edit</button>-->
                 </div>
 
             </div>

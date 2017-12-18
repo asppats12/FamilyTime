@@ -35,12 +35,14 @@ if(isset($_POST["submit"])){
     </form>
     <div id="userListContainer">
         <?php if(isset($users)){
-            foreach($users as $user) {
+            foreach($users as $user){
+                if($user->id!=$_SESSION["userID"]){
                 ?>
                 <div class="listItem">
                     <p><?php echo $user->firstname . " " . $user->lastname; ?></p>
                 </div>
             <?php }
+        }
         } ?>
     </div>
 </main>

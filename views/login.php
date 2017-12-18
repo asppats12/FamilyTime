@@ -55,7 +55,7 @@ else{
 <body>
     <nav class="navbar navbar-default">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Family Time</a>
+            <a class="navbar-brand" href="../index.php">Family Time</a>
         </div>
     </nav>
     <div class="container">

@@ -5,6 +5,17 @@ $(document).ready(function(){
     var inputEmail = $("input[name='email']");
     var inputDate = $("input[name='dateOfBirth']");
 
+    $("#btnProfile").click(function(){
+        event.preventDefault();
+        $("#lblFName").toggle();
+        $(inputFName).toggle();
+        if ($(inputFName).is(':visible')) {
+            $(this).text("X");
+        } else {
+            $(this).text("Edit");
+        }
+    });
+
     $("#btnFName").click(function(){
         event.preventDefault();
         $("#lblFName").toggle();

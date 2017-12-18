@@ -96,7 +96,7 @@ if(isset($_POST['submit'])) {
                     <div class="kv-avatar">
                         <div class="file-loading">
                             <label for="fileUpload">Profile Pic</label>
-                            <input id="avatar-1" name="fileUpload" type="file">
+                            <input id="profilePicUpload" name="fileUpload" type="file">
                         </div>
                     </div>
                     <div class="kv-avatar-hint"><small>Select file < 1500 KB</small></div>
