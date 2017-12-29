@@ -76,9 +76,24 @@
                 </div>
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label"></label>
+            <div class="col-md-4">
+                <button name='submit' type="submit" class="btn btn-warning" >Create Event<span class="glyphicon glyphicon-send"></span></button>
+            </div>
+        </div>
     </form>
-    <div id="mapContainer">
-
+    <div id="map">
+        <iframe
+                width="1340"
+                height="450"
+                frameborder="0" style="border:0"
+                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCMMKCEM21oPG1QbTv0cxOD-hQDKBZVvl0
+                &q=Fairmont+Empress,Victoria+BC
+                &attribution_source=Google+Maps+Embed+API
+                &attribution_web_url=http://www.fairmont.com/empress-victoria/
+                &attribution_ios_deep_link_id=comgooglemaps://?daddr=Fairmont+Empress,+Victoria,+BC" allowfullscreen>
+        </iframe>
     </div>
 </main>
 <?php include_once 'footer.php';?>

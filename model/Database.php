@@ -29,5 +29,6 @@ class Database
             }
             return self::$conn;
         }
+        return false;
     }
 }

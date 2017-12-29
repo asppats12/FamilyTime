@@ -1,8 +1,26 @@
 <?php
 session_start();
+
+require '../model/Database.php';
+require '../model/FamilyGroup.php';
+require '../model/ChatGroup.php';
+
+$famGroup = new FamilyGroup();
+$chatGroup = new ChatGroup();
+
 if(!isset($_SESSION["userID"])){
     header("Location:login.php");
     exit();
+}
+
+if(isset($_POST["createGroup"])){
+    if($famGroup->createGroup($_POST["groupName"], $_SESSION["userID"])){
+        $_SESSION["groupID"] = $famGroup->getId();
+        if($chatGroup->createChat()){
+            $_SESSION["chatID"] = $chatGroup->getId();
+            header("Location: family.php");
+        }
+    }
 }
 ?>
 <!doctype html>
@@ -22,28 +40,18 @@ if(!isset($_SESSION["userID"])){
 <body>
 <?php include_once 'header.php';?>
 <main>
-    <nav id="tabs">
-        <a href="#" id="events">Events</a>
-        <a href="#" id="members">Members</a>
-    </nav>
-    <div id="container">
-        <h3>Family Name</h3>
-        <hr/>
-        <div id="sectionContainer">
-            <section id="familyEvents">
-                <a href="createevent.php">Create an event</a>
-                <section class = "listContainers" id="eventsList"></section>
-            </section>
-            <section id="familyMembers">
-                <a href="addmember.php">Add a member</a>
-                <section class = "listContainers" id="memberList"></section>
-            </section>
-        </div>
+    <?php
 
-    </div>
+    if(!isset($_SESSION["groupID"])){
+        include_once "creategroup.php";
+    }
+    else{
+        include_once "familydetails.php";
+    }
+
+    ?>
 </main>
 <?php include_once 'footer.php';?>
-<script type="text/javascript" src="../scripts/js/dashboard.js"></script>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -51,12 +59,5 @@ if(!isset($_SESSION["userID"])){
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <script src="../scripts/js/family.js" type="text/javascript"></script>
 
-<?php function logout()
-{
-    session_unset();
-    session_destroy();
-    header('Location:../index.php');
-}
-?>
 </body>
 </html>
