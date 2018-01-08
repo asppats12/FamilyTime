@@ -25,7 +25,7 @@ if(!isset($_SESSION["userID"])){
 <main>
     <form action="" method="post" id="searchBox">
         <input id="userSearch" type="text" name="userSearch" placeholder="Enter a name" autocomplete="off">
-        <input id="submit" type="submit" name="submit" value="Find">
+        <input class="genericButton" id="submit" type="submit" name="submit" value="Find">
     </form>
     <div id="userListContainer">
 

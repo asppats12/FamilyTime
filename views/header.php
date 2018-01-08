@@ -5,4 +5,5 @@
         <a class="nav-link" href="profile.php">Profile</a>
         <a class="nav-link" href="../scripts/php/logout.php">Log out</a>
     </div>
+    <hr/>
 </header>

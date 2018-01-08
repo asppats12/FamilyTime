@@ -13,7 +13,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label"></label>
             <div class="col-md-4">
-                <button name='createGroup' type="submit" class="btn btn-warning" >Save</button>
+                <button name='createGroup' type="submit" class="genericButton" >Save</button>
             </div>
         </div>
     </form>

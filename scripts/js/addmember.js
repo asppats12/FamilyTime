@@ -38,21 +38,28 @@ $(document).ready(function(){
         var container = $("<div></div>");
         container.addClass("user-list-item");
         var userPhoto = $("<div class='user-photo'><img alt='profile-photo' src='" + user.profilepicurl + "'></div>");
-        var userDetails = $("<div class='user-details'><h6>" + user.firstname + " " + user.lastname + "</h6><p>" + user.email + "</p>" +
-            "<button class='default-btn' id='addToGroupBtn'onclick='addToGroup(" + user.id + ")'>Add Member</button></div>");
-        var inviteDetails = $("");
+        var userDetails = $("<div class='user-details'><h6>" + user.firstname + " " + user.lastname + "</h6><p>" + user.email + "</p></div>");
+        var addToGroupBtn = $("<button class='default-btn' id='addToGroupBtn'>Add Member</button>");
+        addToGroupBtn.click({id: user.id}, addToGroup);
+
         container.append(userPhoto);
+        userDetails.append(addToGroupBtn);
         container.append(userDetails);
-        container.append(inviteDetails);
         return container;
     }
 
-    function addToGroup(userID){
+    function addToGroup(event){
         $.ajax({
             type: "POST",
-            url: '../api/users.php',
+            url: '../api/addToGroup.php',
+            data: {
+                id: event.data.id
+            },
             success: function(data){
-                users = JSON.parse(data);
+                if(data){
+                    event.target.disabled = true;
+                    event.target.value = "Member";
+                }
             },
             error: function(){}
         });

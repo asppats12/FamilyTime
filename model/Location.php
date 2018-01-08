@@ -9,11 +9,8 @@
 class Location
 {
     private $id;
+    private $name;
     private $lat;
-    private $long;
-    private $street;
-    private $city;
-    private $postal;
-    private $state;
-    private $country;
+    private $lng;
+    private $address;
 }

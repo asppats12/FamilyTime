@@ -5,12 +5,16 @@ require '../model/Database.php';
 require '../model/FamilyGroup.php';
 require '../model/ChatGroup.php';
 
-$famGroup = new FamilyGroup();
-$chatGroup = new ChatGroup();
+$famGroup = FamilyGroup::getGroup();
+$chatGroup = ChatGroup::getChat();
 
 if(!isset($_SESSION["userID"])){
     header("Location:login.php");
     exit();
+}
+else{
+    $famGroup->fetchGroup();
+    $famGroup->fetchMembers();
 }
 
 if(isset($_POST["createGroup"])){
@@ -18,7 +22,9 @@ if(isset($_POST["createGroup"])){
         $_SESSION["groupID"] = $famGroup->getId();
         if($chatGroup->createChat()){
             $_SESSION["chatID"] = $chatGroup->getId();
-            header("Location: family.php");
+            if($famGroup->addToGroup($_SESSION["userID"])){
+                $_SESSION["message"] = "Group successfully created.";
+            }
         }
     }
 }

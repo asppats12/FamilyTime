@@ -1,8 +1,25 @@
 <?php
 session_start();
 
+require '../model/Database.php';
+require '../model/User.php';
+require '../model/FamilyGroup.php';
+require '../model/ChatGroup.php';
+
+$family = null;
+$chat = null;
+
 if(!isset($_SESSION["userID"])){
     header("Location: login.php");
+}
+
+$family = FamilyGroup::getGroup();
+$chat = ChatGroup::getChat();
+if($family->findUserGroup()){
+    $_SESSION["groupID"] = $family->getId();
+}
+if($chat->findChatGroup()){
+    $_SESSION["chatID"] = $chat->getId();
 }
 
 ?>

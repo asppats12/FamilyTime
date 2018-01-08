@@ -19,6 +19,24 @@
     float: left;
 }
 
+.memberContainer{
+    width: 100%;
+    box-sizing: border-box;
+    margin: 10px auto;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 1px #CCCCCC;
+}
+
+.memberContainer img{
+    width: 25%;
+    margin-right: 5px;
+}
+
+.memberContainer img, h6{
+    display: inline-block;
+}
+
 #eventsContainer{
     width:75%;
     box-sizing: border-box;

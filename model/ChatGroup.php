@@ -9,6 +9,7 @@
 class ChatGroup
 {
     private $id;
+    private static $chat;
 
     /**
      * @return mixed
@@ -27,8 +28,37 @@ class ChatGroup
     }
 
 
-    public function __construct()
+    private function __construct()
     {
+    }
+
+    public static function getChat(){
+        if(self::$chat == null){
+            self::$chat = new ChatGroup();
+            return self::$chat;
+        }
+        return self::$chat;
+    }
+
+    public function findChatGroup(){
+        try{
+            $conn = Database::getConnection();
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $fetchGroup = "select * from usergroupbridge where userid=:userid";
+            $stmt = $conn->prepare($fetchGroup);
+            $stmt->bindValue(":userid", $_SESSION["userID"], PDO::PARAM_INT);
+            $stmt->execute();
+            if($stmt->rowCount()>0){
+                $tempChat = $stmt->fetch(PDO::FETCH_OBJ);
+                $this->id = $tempChat->chatid;
+                return true;
+            }
+        }
+        catch(PDOException $ex){
+            $ex->getMessage();
+            exit();
+        }
+        return false;
     }
 
     public function createChat(){
@@ -41,11 +71,11 @@ class ChatGroup
             if($stmt->execute()>0){
                 $fetchChatID = "select id from chat where groupid = :groupid";
                 $stmt = $conn->prepare($fetchChatID);
-                $stmt->bindValue(":groupid". $_SESSION["groupID"]);
+                $stmt->bindValue(":groupid", $_SESSION["groupID"]);
                 $stmt->execute();
                 if($stmt->rowCount()>0){
-                    $this->id = $stmt->fetch(PDO::FETCH_OBJ)->id;
-                    $stmt->closeCursor();
+                    $tempChat = $stmt->fetch(PDO::FETCH_OBJ);
+                    $this->id =$tempChat->id;
                     return true;
                 }
             }

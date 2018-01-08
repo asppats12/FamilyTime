@@ -3,6 +3,7 @@ session_start();
 require '../model/Database.php';
 require '../model/User.php';
 
+
 $error = "";
 $valid = true;
 $email = "";
@@ -75,7 +76,7 @@ else{
                 <label for="password">Password:</label>
                 <input type="password" class="form-control" id="password" name="password">
             </div>
-            <button type="submit" class="btn btn-default" id="submit" name="login">Submit</button>
+            <button type="submit" class="genericButton" id="submit" name="login">Submit</button>
         </form>
     </div>
 

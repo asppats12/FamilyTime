@@ -22,6 +22,7 @@ else{
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body>
 <?php include 'header.php'; ?>
@@ -47,7 +48,7 @@ else{
                     <div class="input-group">
                         <label id="lblFName"><?php echo $user->getFirstName();?></label>
                         <input  name="fname" placeholder="First Name" class="form-control"  type="text" value="">
-                        <button id="btnFName">Edit</button>
+                        <button class="genericButton" id="btnFName">Edit</button>
                     </div>
                 </div>
             </div>
@@ -58,7 +59,7 @@ else{
                     <div class="input-group">
                         <label id="lblLName"><?php echo $user->getLastName();?></label>
                         <input name="lname" placeholder="Last Name" class="form-control"  type="text" value="">
-                        <button id="btnLName">Edit</button>
+                        <button class="genericButton" id="btnLName">Edit</button>
                     </div>
                 </div>
             </div>
@@ -69,7 +70,7 @@ else{
                     <div class="input-group">
                         <label id="lblDateOfBirth"><?php echo $user->getDateOfBirth();?></label>
                         <input type="date" name="dateOfBirth" class="form-control" placeholder="Date of Birth" id="exampleInputDOB1" value="<?php echo date('Y-m-d',strtotime($user->getDateOfBirth())); ?>" >
-                        <button id="btnDateOfBirth">Edit</button>
+                        <button class="genericButton" id="btnDateOfBirth">Edit</button>
                     </div>
                 </div>
             </div>
@@ -80,7 +81,7 @@ else{
                     <div class="input-group">
                         <label id="lblEmail"><?php echo $user->getEmail();?></label>
                         <input name="email" placeholder="E-Mail Address" class="form-control"  type="text" value="<?php echo $user->getEmail(); ?>">
-                        <button id="btnEmail">Edit</button>
+                        <button class="genericButton" id="btnEmail">Edit</button>
                     </div>
                 </div>
             </div>
@@ -113,7 +114,7 @@ else{
             <div class="form-group">
                 <label class="col-md-4 control-label"></label>
                 <div class="col-md-4">
-                    <button id = 'submit' name='submit' type="submit" class="btn btn-warning" >Sign Up <span class="glyphicon glyphicon-send"></span></button>
+                    <button id='submit' name='submit' type="submit" class="genericButton" >Sign Up <span class="glyphicon glyphicon-send"></span></button>
                 </div>
             </div>
 
