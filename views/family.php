@@ -4,9 +4,15 @@ session_start();
 require '../model/Database.php';
 require '../model/FamilyGroup.php';
 require '../model/ChatGroup.php';
+require '../model/Event.php';
+require '../model/Location.php';
 
 $famGroup = FamilyGroup::getGroup();
 $chatGroup = ChatGroup::getChat();
+$event = Event::getEvent();
+$location = Location::getLocation();
+
+$events = null;
 
 if(!isset($_SESSION["userID"])){
     header("Location:login.php");
@@ -15,6 +21,20 @@ if(!isset($_SESSION["userID"])){
 else{
     $famGroup->fetchGroup();
     $famGroup->fetchMembers();
+
+    try{
+        $conn = Database::getConnection();
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $fetch = "select * from eventlocationbridge where groupid=:groupid";
+        $stmt = $conn->prepare($fetch);
+        $stmt->bindValue(":groupid", $_SESSION["groupID"]);
+        $stmt->execute();
+        if($stmt->rowCount()>0){
+            $events = $stmt->fetchAll(PDO::FETCH_OBJ);
+        }
+    } catch (PDOException $ex){
+        echo $ex->getMessage();
+    }
 }
 
 if(isset($_POST["createGroup"])){

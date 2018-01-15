@@ -6,14 +6,21 @@ require_once '../model/Database.php';
 try{
     $conn = Database::getConnection();
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $addEvent = "insert into events(name, details, startdate, enddate, starttime, endtime) values(:eventname,:details,:startdate,:enddate,:starttime,:endtime)";
+    $addEvent = "insert into events(start, end, title) values(:start,:end,:title)";
     $stmt = $conn->prepare($addEvent);
-    $stmt->bindValue(":eventname", $_POST["eventName"]);
-    $stmt->bindValue(":details", $_POST["eventDetails"]);
-    $stmt->bindValue(":startdate", $_POST["startDate"]);
-    $stmt->bindValue(":enddate", $_POST["endDate"]);
-    $stmt->bindValue(":starttime", $_POST["startTime"]);
-    $stmt->bindValue(":endtime", $_POST["endTime"]);
+
+    $sTime = $_POST["startDate"]." ".$_POST["startTime"];
+    $datetime = DateTime::createFromFormat('d-m-Y h:i A', $sTime);
+    $start = $datetime->format("Y-m-d H:i:s");
+
+    $eTime = $_POST["endDate"]." ".$_POST["endTime"];
+    $datetime = DateTime::createFromFormat('d-m-Y h:i A', $eTime);
+    $end = $datetime->format("Y-m-d H:i:s");
+
+
+    $stmt->bindValue(":start", $start);
+    $stmt->bindValue(":end", $end);
+    $stmt->bindValue(":title", $_POST["eventname"]);
 
     if($stmt->execute() > 0){
         $eventId = $conn->lastInsertId();

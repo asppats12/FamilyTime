@@ -37,16 +37,34 @@
     display: inline-block;
 }
 
-#eventsContainer{
+#eventsList{
     width:75%;
     box-sizing: border-box;
     padding: 1em;
     float: right;
 }
 
-
-#initialContainer{
+.eventContainer{
+    box-sizing: border-box;
     width: 100%;
-    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 1px #CCCCCC;
+    margin-top: 15px;
+}
+
+.eventDetailsContainer{
+    box-sizing: border-box;
+    width: 60%;
+    padding: 5px;
+    margin: auto;
+}
+
+.locationDetailsContainer{
+    width: 40%;
+    box-sizing: border-box;
+    padding: 5px;
+    margin: auto;
 }
 

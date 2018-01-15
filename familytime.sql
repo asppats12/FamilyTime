@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 18, 2017 at 04:03 AM
+-- Generation Time: Jan 10, 2018 at 03:51 AM
 -- Server version: 5.7.19
--- PHP Version: 5.6.31
+-- PHP Version: 7.0.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -32,10 +32,16 @@ DROP TABLE IF EXISTS `chat`;
 CREATE TABLE IF NOT EXISTS `chat` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `groupid` int(11) NOT NULL,
-  `chatfileaddress` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `groupid` (`groupid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `chat`
+--
+
+INSERT INTO `chat` (`id`, `groupid`) VALUES
+(4, 7);
 
 -- --------------------------------------------------------
 
@@ -73,7 +79,16 @@ CREATE TABLE IF NOT EXISTS `eventlocationbridge` (
   KEY `locationid` (`locationid`),
   KEY `userid` (`userid`),
   KEY `groupid` (`groupid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `eventlocationbridge`
+--
+
+INSERT INTO `eventlocationbridge` (`id`, `eventid`, `locationid`, `userid`, `groupid`) VALUES
+(1, 3, 1, 1, 7),
+(2, 4, 2, 1, 7),
+(3, 5, 3, 1, 7);
 
 -- --------------------------------------------------------
 
@@ -91,7 +106,16 @@ CREATE TABLE IF NOT EXISTS `events` (
   `starttime` time NOT NULL,
   `endtime` time NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`id`, `name`, `details`, `startdate`, `enddate`, `starttime`, `endtime`) VALUES
+(3, 'Exams', 'Exams', '2018-02-11', '2018-02-12', '11:00:00', '12:00:00'),
+(4, 'Party', 'Party', '2018-01-20', '2018-01-20', '20:00:00', '00:00:00'),
+(5, 'Black Panther', 'Movie Time', '2018-02-01', '2018-02-01', '20:20:00', '22:30:00');
 
 -- --------------------------------------------------------
 
@@ -103,8 +127,17 @@ DROP TABLE IF EXISTS `familygroup`;
 CREATE TABLE IF NOT EXISTS `familygroup` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `admin` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `admin` (`admin`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `familygroup`
+--
+
+INSERT INTO `familygroup` (`id`, `name`, `admin`) VALUES
+(7, 'The Fam', 1);
 
 -- --------------------------------------------------------
 
@@ -115,15 +148,22 @@ CREATE TABLE IF NOT EXISTS `familygroup` (
 DROP TABLE IF EXISTS `location`;
 CREATE TABLE IF NOT EXISTS `location` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `latitude` double NOT NULL,
-  `longitude` double NOT NULL,
-  `streetaddress` varchar(255) NOT NULL,
-  `city` varchar(100) NOT NULL,
-  `postal` varchar(16) NOT NULL,
-  `state` varchar(16) NOT NULL,
-  `country` varchar(50) NOT NULL,
+  `place_id` varchar(255) NOT NULL,
+  `name` text NOT NULL,
+  `lat` float NOT NULL,
+  `lng` float NOT NULL,
+  `formattedaddress` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `location`
+--
+
+INSERT INTO `location` (`id`, `place_id`, `name`, `lat`, `lng`, `formattedaddress`) VALUES
+(1, 'ChIJCfji06w7K4gR1Ca9tLlrR-0', 'Humber College', 43.7292, -79.6049, 'Toronto, ON M9W, Canada'),
+(2, 'ChIJryG3suI7K4gR8Fx4QyOOVOU', 'The International Centre', 43.7033, -79.6377, '6900 Airport Rd, Mississauga, ON L4V 1E8, Canada'),
+(3, 'ChIJ6WXdCtA0K4gR5wmJfTBGe48', 'Scotiabank Theatre Toronto', 43.6489, -79.3912, '259 Richmond St W, Toronto, ON M5V 3M6, Canada');
 
 -- --------------------------------------------------------
 
@@ -138,10 +178,21 @@ CREATE TABLE IF NOT EXISTS `usergroupbridge` (
   `groupid` int(11) NOT NULL,
   `chatid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `userid_2` (`userid`),
   KEY `userid` (`userid`),
   KEY `groupid` (`groupid`),
   KEY `chatid` (`chatid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `usergroupbridge`
+--
+
+INSERT INTO `usergroupbridge` (`id`, `userid`, `groupid`, `chatid`) VALUES
+(3, 1, 7, 4),
+(6, 2, 7, 4),
+(7, 3, 7, 4),
+(8, 5, 7, 4);
 
 -- --------------------------------------------------------
 
@@ -197,6 +248,12 @@ ALTER TABLE `eventlocationbridge`
   ADD CONSTRAINT `eventlocationbridge_ibfk_2` FOREIGN KEY (`locationid`) REFERENCES `location` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `eventlocationbridge_ibfk_3` FOREIGN KEY (`userid`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `eventlocationbridge_ibfk_4` FOREIGN KEY (`groupid`) REFERENCES `familygroup` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `familygroup`
+--
+ALTER TABLE `familygroup`
+  ADD CONSTRAINT `familygroup_ibfk_1` FOREIGN KEY (`admin`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `usergroupbridge`

@@ -3,7 +3,6 @@ session_start();
 require '../model/Database.php';
 require '../model/User.php';
 
-
 $error = "";
 $valid = true;
 $email = "";

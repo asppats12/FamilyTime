@@ -5,6 +5,7 @@
  * Date: 2017-12-16
  * Time: 4:55 PM
  */
+date_default_timezone_set('America/Toronto');
 ?>
 <!doctype html>
 <html lang="en">
@@ -36,7 +37,7 @@
             <label class="col-md-12 control-label" for="startdate">Start Date</label>
             <div class="col-md-12 inputGroupContainer">
                 <div class="input-group">
-                    <input  id="startdate" name="startdate" class="form-control"  type="date">
+                    <input  id="startdate" name="startdate" class="form-control"  type="date" value="<?php echo date('Y-m-d')?>">
                 </div>
             </div>
         </div>
@@ -45,7 +46,7 @@
             <label class="col-md-12 control-label" for="enddate">End Date</label>
             <div class="col-md-12 inputGroupContainer">
                 <div class="input-group">
-                    <input  id="enddate" name="enddate" class="form-control"  type="date">
+                    <input  id="enddate" name="enddate" class="form-control"  type="date" value="<?php echo date('Y-m-d')?>">
                 </div>
             </div>
         </div>
@@ -54,7 +55,7 @@
             <label class="col-md-12 control-label" for="starttime">Start Time</label>
             <div class="col-md-12 inputGroupContainer">
                 <div class="input-group">
-                    <input  id="starttime" name="starttime" class="form-control"  type="time">
+                    <input  id="starttime" name="starttime" class="form-control"  type="time" value="<?php echo date('H:i')?>">
                 </div>
             </div>
         </div>
@@ -63,19 +64,11 @@
             <label class="col-md-12 control-label" for="endtime">End Time</label>
             <div class="col-md-12 inputGroupContainer">
                 <div class="input-group">
-                    <input  id="endtime" name="endtime" class="form-control"  type="time">
+                    <input  id="endtime" name="endtime" class="form-control"  type="time" value="<?php echo date('H:i')?>">
                 </div>
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="col-md-12 control-label" for="eventdetails">Details</label>
-            <div class="col-md-12 inputGroupContainer">
-                <div class="input-group">
-                    <textarea  id="eventdetails" name="eventdetails" class="form-control"></textarea>
-                </div>
-            </div>
-        </div>
         <div class="form-group">
             <label class="col-md-12 control-label"></label>
             <div class="col-md-12">

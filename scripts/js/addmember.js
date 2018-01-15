@@ -57,11 +57,13 @@ $(document).ready(function(){
             },
             success: function(data){
                 if(data){
-                    event.target.disabled = true;
-                    event.target.value = "Member";
+                    $(event).text("Member");
+                    $(event).disabled = true;
                 }
             },
-            error: function(){}
+            error: function(){
+
+            }
         });
     }
 });

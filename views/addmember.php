@@ -6,6 +6,10 @@ if(!isset($_SESSION["userID"])){
     header("Location:login.php");
     exit();
 }
+if($_SESSION["adminID"] != $_SESSION["userID"]){
+    header("Location:family.php");
+    exit();
+}
 ?>
 <!doctype html>
 <html lang="en">

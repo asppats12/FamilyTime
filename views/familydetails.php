@@ -15,13 +15,46 @@
                 }
             }
         ?>
-        <a class="genericButton" href="addmember.php">Add member</a>
+        <?php
+            if($_SESSION["adminID"] == $_SESSION["userID"]){?>
+                <a class="genericButton" href="addmember.php">Add member</a>
+        <?php
+            }
+        ?>
         <section id="memberList"></section>
     </aside>
     <section id="eventsContainer">
         <h3>Upcoming Family Events</h3>
         <hr/>
         <a class="genericButton" href="createevent.php">New Event</a>
-        <section id="eventsList"></section>
+        <section id="eventsList">
+            <?php
+            if(!empty($events)){
+                foreach ($events as $eve){
+                    $event->getEventDetails($eve->eventid);
+                    $location->getLocationDetails($eve->locationid);
+
+            ?>
+                <div class='eventContainer'>
+                    <div class="eventDetailsContainer">
+                        <h6><?php echo $event->getName();?></h6>
+                        <p>Date: <?php echo $event->getStartDate(). " " . $event->getEndDate();?></p>
+                        <i>Start Time: <?php echo $event->getStartTime();?></i>
+                        <i>End Time: <?php echo $event->getEndTime();?></i>
+                    </div>
+                    <div class="locationDetailsContainer">
+                        <strong><?php echo $location->getName();?></strong>
+                        <p><?php echo $location->getAddress();?></p>
+                    </div>
+                </div>
+            <?php
+                }
+            }
+            else { ?>
+                <h6>Let's create some events</h6>
+            <?php
+            }
+            ?>
+        </section>
     </section>
 </div>

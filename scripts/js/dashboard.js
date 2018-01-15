@@ -1,14 +1,6 @@
-var calContainer = document.getElementById("calContainer");
+$(document).ready(function(){
+    $("#calendar").fullCalendar({
 
-
-/*for(var i=1;i<=5;i++){
-    for(var j=1;j<=7;j++){
-        var calNode = document.createElement("div");
-        var dateNode = document.createElement("p");
-        var textNode = document.createTextNode = i;
-        dateNode.appendChild(textNode);
-        calNode.appendChild(dateNode);
-        calContainer.appendChild(calNode);
-    }
-}*/
+    });
+});
 

@@ -11,6 +11,7 @@ class FamilyGroup
     private $id;
     private $name;
     private $adminID;
+    private static $group;
     private $members = array();
 
     /**
@@ -28,8 +29,6 @@ class FamilyGroup
     {
         return $this->members;
     }
-
-    private static $group;
 
     /**
      * @return mixed
@@ -109,6 +108,7 @@ class FamilyGroup
                 $tempGroup = $stmt->fetch(PDO::FETCH_OBJ);
                 $this->id = $tempGroup->id;
                 $this->name = $tempGroup->name;
+                $this->adminID = $tempGroup->admin;
                 return true;
             }
         }

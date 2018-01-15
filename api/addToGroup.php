@@ -10,10 +10,8 @@ $fam = FamilyGroup::getGroup();
 
 if($fam->addToGroup($_POST["id"])){
     echo true;
-    exit();
 }
 else{
     echo false;
-    exit();
 }
 ?>
