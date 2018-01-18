@@ -37,14 +37,23 @@
             ?>
                 <div class='eventContainer'>
                     <div class="eventDetailsContainer">
-                        <h6><?php echo $event->getName();?></h6>
-                        <p>Date: <?php echo $event->getStartDate(). " " . $event->getEndDate();?></p>
-                        <i>Start Time: <?php echo $event->getStartTime();?></i>
-                        <i>End Time: <?php echo $event->getEndTime();?></i>
+                        <h6><?php echo $event->getTitle();?></h6>
+                        <p>From: <?php echo $event->getStart()?></p>
+                        <p>To: <?php echo $event->getEnd();?></p>
                     </div>
                     <div class="locationDetailsContainer">
                         <strong><?php echo $location->getName();?></strong>
                         <p><?php echo $location->getAddress();?></p>
+                    </div>
+                    <div class="eventControlsContainer">
+                        <!--<form action="createevent.php" method="post">
+                            <input type="hidden" name="editEventId" value="<?php /*echo $event->getId();*/?>">
+                            <input class="genericButton" type="submit" name="editEvent" value="Edit">
+                        </form>-->
+                        <form action="" method="post">
+                            <input type="hidden" name="deleteEventId" value="<?php echo $event->getId();?>">
+                            <input class="genericButton" type="submit" name="deleteEvent" value="Delete">
+                        </form>
                     </div>
                 </div>
             <?php

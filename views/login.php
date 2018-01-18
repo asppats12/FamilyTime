@@ -28,6 +28,8 @@ else{
             $userMatch = $user->findUser($email,$password);
             if($userMatch){
                 $_SESSION["userID"] = $user->getId();
+                $user->fetchUser($user->getId());
+                $_SESSION["userName"] = $user->getFirstName() . " " . $user->getLastName();
                 header("Location: dashboard.php");
                 exit();
             }

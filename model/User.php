@@ -162,6 +162,7 @@ class User
             echo $ex->getMessage();
             exit();
         }
+        return false;
     }
 
     public function fetchUser($id){
@@ -187,6 +188,7 @@ class User
             echo $ex->getMessage();
             exit();
         }
+        return false;
     }
 
     public function insertUser(){
@@ -194,9 +196,9 @@ class User
 
             $conn = Database::getConnection();
             $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-            $update="INSERT INTO users(email,password,firstname,lastname,dateofbirth,profilepicurl) VALUES(:email,:password,:fname,:lname,:date,:profilepicurl)";
+            $insert="INSERT INTO users(email,password,firstname,lastname,dateofbirth,profilepicurl) VALUES(:email,:password,:fname,:lname,:date,:profilepicurl)";
 
-            $stmt = $conn->prepare($update);
+            $stmt = $conn->prepare($insert);
             $stmt->bindValue(':fname',$this->firstName,PDO::PARAM_STR);
             $stmt->bindValue(':lname',$this->lastName,PDO::PARAM_STR);
             $stmt->bindValue(':date',$this->dateOfBirth,PDO::PARAM_STR);
@@ -213,10 +215,33 @@ class User
             echo $e->getMessage();
             exit();
         }
+        return false;
     }
 
     public function updateUser(){
+        try {
 
+            $conn = Database::getConnection();
+            $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+            $update="update users set email=:email, firstname=:fname, lastname=:lname, dateofbirth=:date where id=:userid";
+
+            $stmt = $conn->prepare($update);
+            $stmt->bindValue(':userid', $_SESSION["userID"], PDO::PARAM_INT);
+            $stmt->bindValue(':fname',$this->firstName,PDO::PARAM_STR);
+            $stmt->bindValue(':lname',$this->lastName,PDO::PARAM_STR);
+            $stmt->bindValue(':date',$this->dateOfBirth,PDO::PARAM_STR);
+            $stmt->bindValue(':email',$this->email,PDO::PARAM_STR);
+            $rowsUpdated = $stmt->execute();
+
+            if ($rowsUpdated > 0) {
+                return true;
+            }
+        }
+        catch (PDOException $e) {
+            echo $e->getMessage();
+            exit();
+        }
+        return false;
     }
 
     public function insertPhoto(){
@@ -255,9 +280,52 @@ class User
             if (move_uploaded_file($_FILES["fileUpload"]["tmp_name"], $target_file)) {
                 $this->setProfilePicUrl($target_file);
                 return true;
-            } else {
-                return false;
             }
         }
+        return false;
     }
+
+    public function changePassword($newPassword){
+        try {
+
+            $conn = Database::getConnection();
+            $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+            $update="update users set password=:password where id=:userid";
+
+            $stmt = $conn->prepare($update);
+            $stmt->bindValue(':userid', $_SESSION["userID"], PDO::PARAM_INT);
+            $stmt->bindValue(':password', $newPassword, PDO::PARAM_STR);
+            $rowsUpdated = $stmt->execute();
+
+            if ($rowsUpdated > 0) {
+                return true;
+            }
+        }
+        catch (PDOException $e) {
+            echo $e->getMessage();
+            exit();
+        }
+        return false;
+    }
+
+    public function fetchPassword(){
+        try {
+
+            $conn = Database::getConnection();
+            $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+            $update="select password from users where id=:userid";
+
+            $stmt = $conn->prepare($update);
+            $stmt->bindValue(':userid', $_SESSION["userID"], PDO::PARAM_INT);
+            if($stmt->execute()){
+                return $stmt->fetch(PDO::FETCH_OBJ)->password;
+            }
+        }
+        catch (PDOException $e) {
+            echo $e->getMessage();
+            exit();
+        }
+        return false;
+    }
+
 }

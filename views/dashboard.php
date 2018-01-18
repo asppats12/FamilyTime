@@ -9,6 +9,7 @@ require '../model/ChatGroup.php';
 $family = null;
 $chat = null;
 
+
 if(!isset($_SESSION["userID"])){
     header("Location: login.php");
 }
@@ -34,8 +35,9 @@ if($chat->findChatGroup()){
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link rel="stylesheet" href="../styles/dashboard.css" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="../styles/dashboard.css" type="text/css"/>
+    <link rel="stylesheet" href="../styles/style.css" type="text/css"/>
     <link rel='stylesheet' href="../fullcalendar/fullcalendar.css" />
 
 
@@ -43,11 +45,15 @@ if($chat->findChatGroup()){
 <body>
 <?php include_once 'header.php';?>
 <main>
+    <a class="genericButton" style="margin-left: 10%; text-decoration: none;" href="createevent.php">New Event</a>
     <div id="calendar">
 
     </div>
 </main>
-<?php include_once 'footer.php';?>
+<?php
+include_once 'chatbox.php';
+include_once 'footer.php';
+?>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -58,5 +64,6 @@ if($chat->findChatGroup()){
 <script src="../fullcalendar/lib/moment.min.js"></script>
 <script src="../fullcalendar/fullcalendar.js"></script>
 <script type="text/javascript" src="../scripts/js/dashboard.js"></script>
+<script type="text/javascript" src="../scripts/js/chatbox.js"></script>
 </body>
 </html>

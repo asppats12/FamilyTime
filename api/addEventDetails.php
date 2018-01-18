@@ -3,29 +3,31 @@ session_start();
 
 require_once '../model/Database.php';
 
-try{
+try {
     $conn = Database::getConnection();
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $addEvent = "insert into events(start, end, title) values(:start,:end,:title)";
+    $sDt = $_POST["startDate"];
+    $sT = $_POST["startTime"];
+
+    $eDt = $_POST["endDate"];
+    $eT = $_POST["endTime"];
+
+    $eventTitle = $_POST["eventName"];
+
+   /* $start = new DateTime($sDt->format('Y-m-d') .' ' .$sT->format('H:i'));
+    $end = new DateTime($eDt->format('Y-m-d'). ' '.$eT->format('H:i'));*/
+
+    $addEvent = "insert into events(start, end, title) values(:start, :end, :title)";
     $stmt = $conn->prepare($addEvent);
 
-    $sTime = $_POST["startDate"]." ".$_POST["startTime"];
-    $datetime = DateTime::createFromFormat('d-m-Y h:i A', $sTime);
-    $start = $datetime->format("Y-m-d H:i:s");
+    $stmt->bindValue(":start",$sDt . ' ' .$sT);
+    $stmt->bindValue(":end",$eDt . ' ' . $eT);
+    $stmt->bindValue(":title", $eventTitle);
 
-    $eTime = $_POST["endDate"]." ".$_POST["endTime"];
-    $datetime = DateTime::createFromFormat('d-m-Y h:i A', $eTime);
-    $end = $datetime->format("Y-m-d H:i:s");
-
-
-    $stmt->bindValue(":start", $start);
-    $stmt->bindValue(":end", $end);
-    $stmt->bindValue(":title", $_POST["eventname"]);
-
-    if($stmt->execute() > 0){
+    if($stmt->execute() > 0) {
         $eventId = $conn->lastInsertId();
         $addLocation = "insert into location(place_id, name, lat, lng, formattedaddress) values(:id, :placename, :lat, :lng, :address)";
-        $stmt =  $conn->prepare($addLocation);
+        $stmt = $conn->prepare($addLocation);
         $stmt->bindValue(":id", $_POST["placeId"]);
         $stmt->bindValue(":placename", $_POST["placeName"]);
         $stmt->bindValue(":lat", $_POST["lat"]);
@@ -34,7 +36,7 @@ try{
         $stmt->execute();
         $locationId = $conn->lastInsertId();
         $stmt->closeCursor();
-        if(updateBridge($eventId, $locationId)){
+        if (updateBridge($eventId, $locationId)) {
             echo true;
         }
     }

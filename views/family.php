@@ -14,6 +14,11 @@ $location = Location::getLocation();
 
 $events = null;
 
+if(isset($_POST["deleteEvent"])){
+    $event->setId($_POST["deleteEventId"]);
+    $event->deleteEvent();
+}
+
 if(!isset($_SESSION["userID"])){
     header("Location:login.php");
     exit();

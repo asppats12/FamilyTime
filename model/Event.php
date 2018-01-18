@@ -12,9 +12,6 @@ class Event
     private $title;
     private $start;
     private $end;
-    private $endDate;
-    private $startTime;
-    private $endTime;
 
     /**
      * @return mixed
@@ -35,97 +32,49 @@ class Event
     /**
      * @return mixed
      */
-    public function getName()
+    public function getTitle()
     {
-        return $this->name;
+        return $this->title;
     }
 
     /**
-     * @param mixed $name
+     * @param mixed $title
      */
-    public function setName($name)
+    public function setTitle($title)
     {
-        $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDetails()
-    {
-        return $this->details;
-    }
-
-    /**
-     * @param mixed $details
-     */
-    public function setDetails($details)
-    {
-        $this->details = $details;
+        $this->title = $title;
     }
 
     /**
      * @return mixed
      */
-    public function getStartDate()
+    public function getStart()
     {
-        return $this->startDate;
+        return $this->start;
     }
 
     /**
-     * @param mixed $startDate
+     * @param mixed $start
      */
-    public function setStartDate($startDate)
+    public function setStart($start)
     {
-        $this->startDate = $startDate;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEndDate()
-    {
-        return $this->endDate;
-    }
-
-    /**
-     * @param mixed $endDate
-     */
-    public function setEndDate($endDate)
-    {
-        $this->endDate = $endDate;
+        $this->start = $start;
     }
 
     /**
      * @return mixed
      */
-    public function getStartTime()
+    public function getEnd()
     {
-        return $this->startTime;
+        return $this->end;
     }
 
     /**
-     * @param mixed $startTime
+     * @param mixed $end
      */
-    public function setStartTime($startTime)
+    public function setEnd($end)
     {
-        $this->startTime = $startTime;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEndTime()
-    {
-        return $this->endTime;
-    }
-
-    /**
-     * @param mixed $endTime
-     */
-    public function setEndTime($endTime)
-    {
-        $this->endTime = $endTime;
+        $this->end = $end;
     }
 
     private static $event;
@@ -152,12 +101,28 @@ class Event
             if($stmt->rowCount()>0){
                 $tempEvent = $stmt->fetch(PDO::FETCH_OBJ);
                 $this->id = $tempEvent->id;
-                $this->name = $tempEvent->name;
-                $this->details = $tempEvent->details;
-                $this->startDate = $tempEvent->startdate;
-                $this->endDate = $tempEvent->enddate;
-                $this->startTime = $tempEvent->starttime;
-                $this->endTime = $tempEvent->endtime;
+                $this->title = $tempEvent->title;
+                $this->start = $tempEvent->start;
+                $this->end = $tempEvent->end;
+                return true;
+            }
+        }
+        catch(PDOException $ex){
+            $ex->getMessage();
+            exit();
+        }
+        return false;
+    }
+
+    public function deleteEvent(){
+        try{
+            $conn = Database::getConnection();
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $fetchGroup = "delete from events where id=:eventid";
+            $stmt = $conn->prepare($fetchGroup);
+            $stmt->bindValue(":eventid", $this->id, PDO::PARAM_INT);
+            $rowUpdated = $stmt->execute();
+            if($rowUpdated>0){
                 return true;
             }
         }
